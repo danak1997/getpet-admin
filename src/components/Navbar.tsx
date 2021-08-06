@@ -30,7 +30,7 @@ import { clearToken } from '../utils/auth';
 import { useHistory } from 'react-router-dom';
 
 const links = [
-  { url: '/', name: 'ראשי' },
+  { url: '/', name: 'חיות' },
   { url: '/reports', name: 'דיווחים' },
 ];
 
