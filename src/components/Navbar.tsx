@@ -24,18 +24,29 @@ import { SearchIcon } from '@chakra-ui/icons';
 import NavbarLink from './NavbarLink';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../context/user';
+import { clearToken } from '../utils/auth';
+import { useHistory } from 'react-router-dom';
 
 const links = [
   { url: '/', name: 'ראשי' },
-  { url: '/pets', name: 'חיות' },
   { url: '/reports', name: 'דיווחים' },
-  { url: '/users', name: 'משתמשים' },
 ];
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [,setUser] = useContext(UserContext);
+  const router = useHistory();
+
+  const logout = async () => {
+    clearToken();
+    router.push('/');
+    setUser({
+      loggedIn: false
+    });
+  };
 
   return (
     <Box
@@ -80,12 +91,10 @@ export default function Navbar() {
             <MenuList zIndex={9999}>
               <MenuGroup title="הגדרות">
                 <MenuItem command="T⌘" onClick={toggleColorMode}>מצב {colorMode === 'light' ? 'חשוך' : 'בהיר'}</MenuItem>
-                <MenuItem>עוד אפשרויות</MenuItem>
               </MenuGroup>
               <MenuDivider />
               <MenuGroup title="פרופיל">
-                <MenuItem>ערוך</MenuItem>
-                <MenuItem>התנתק</MenuItem>
+                <MenuItem onClick={logout}>התנתק</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>

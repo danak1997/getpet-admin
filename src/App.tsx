@@ -7,26 +7,24 @@ import {
   Redirect
 } from 'react-router-dom';
 import LoginPage from './pages/Login';
-import HomePage from './pages/Index';
 import '@fontsource/alef';
 import ReportsPage from './pages/Reports';
 import { useAuth } from './utils/auth';
 import UserContext from './context/user';
 import PetsPage from './pages/Pets';
+import PetsContext, { Pet } from './context/pets';
 
 function App() {
   const { user, setUser } = useAuth();
+  const [pets, setPets] = useState<Pet[] | null>(null);
 
   const routes = user.loggedIn ? (
     <Switch>
       <Route path="/reports">
         <ReportsPage />
       </Route>
-      <Route path="/pets">
-        <PetsPage />
-      </Route>
       <Route path="/" exact>
-        <HomePage />
+        <PetsPage />
       </Route>
       <Redirect to="/" />
     </Switch>
@@ -41,9 +39,11 @@ function App() {
   
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <Router>
-        {routes}
-      </Router>
+      <PetsContext.Provider value={[pets, setPets]}>
+        <Router>
+          {routes}
+        </Router>
+      </PetsContext.Provider>
     </UserContext.Provider>
   );
 }
