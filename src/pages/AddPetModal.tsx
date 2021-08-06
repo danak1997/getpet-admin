@@ -52,6 +52,11 @@ const AddPetModal = (props: Props) => {
     props.pet && setPet(props.pet);
   }, [props.pet]);
 
+  const close = () => {
+    saveMode && setPet({ type: 'dog', tags: [], gender: 'male' });
+    onClose();
+  };
+
   const addPet = async () => {
     try {
       if (!pet.name || !pet.description || !pet.profilePhoto) return;
@@ -91,7 +96,7 @@ const AddPetModal = (props: Props) => {
     <>
       <Button size="sm" onClick={onOpen} rightIcon={saveMode ? <FaPlus /> : <FaPen />}>{saveMode ? 'הוסף' : 'ערוך'}</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
+      <Modal isOpen={isOpen} onClose={close} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{saveMode ? 'הוסף חיה' : 'ערוך פרטי חיה'}</ModalHeader>
@@ -160,7 +165,7 @@ const AddPetModal = (props: Props) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost" onClick={onClose}>ביטול</Button>
+            <Button variant="ghost" onClick={close}>ביטול</Button>
             <Button colorScheme="blue" mr={3} isLoading={loading} onClick={addPet}>
               שמור
             </Button>
