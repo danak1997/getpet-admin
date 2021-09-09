@@ -26,6 +26,7 @@ import {
   CheckboxGroup,
   List,
   ListItem,
+  Select,
 } from '@chakra-ui/react';
 import { FaPen, FaPlus } from 'react-icons/fa';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ import { getAuthHeaders } from '../utils/auth';
 import { tags, tagsData } from '../utils/tags';
 import { toBase64 } from '../utils/file';
 import { useEffect } from 'react';
+import locations from '../locations';
 
 type Props = {
   pet?: Pet;
@@ -148,6 +150,14 @@ const AddPetModal = (props: Props) => {
                     ))}
                   </List>
                 </CheckboxGroup>
+              </FormControl>
+              <FormControl id="location">
+                <FormLabel>מיקום</FormLabel>
+                <Select dir="ltr" value={pet.location}>
+                  {locations.map((location) => (
+                    <option key={location} value={location}>{location}</option>
+                  ))}
+                </Select>
               </FormControl>
               <FormControl id="description">
                 <FormLabel>תיאור</FormLabel>

@@ -12,6 +12,7 @@ export type Pet = {
   age: number,
   gender: string,
   profilePhoto: string,
+  location: string,
   tags: string[]
 }
 
