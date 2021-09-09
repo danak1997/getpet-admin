@@ -153,7 +153,7 @@ const AddPetModal = (props: Props) => {
               </FormControl>
               <FormControl id="location">
                 <FormLabel>מיקום</FormLabel>
-                <Select dir="ltr" value={pet.location}>
+                <Select dir="ltr" value={pet.location} onChange={(e) => setPet({ ...pet, location: e.target.value })}>
                   {locations.map((location) => (
                     <option key={location} value={location}>{location}</option>
                   ))}
