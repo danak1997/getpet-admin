@@ -44,7 +44,7 @@ type Props = {
 
 const AddPetModal = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [pet, setPet] = useState<Partial<Pet>>({ type: 'dog', tags: [], gender: 'male' });
+  const [pet, setPet] = useState<Partial<Pet>>({ type: 'dog', tags: [], gender: 'male', location: locations[0] });
   const initialRef = React.useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const { reloadPets } = usePets();
@@ -55,7 +55,7 @@ const AddPetModal = (props: Props) => {
   }, [props.pet]);
 
   const close = () => {
-    saveMode && setPet({ type: 'dog', tags: [], gender: 'male' });
+    saveMode && setPet({ type: 'dog', tags: [], gender: 'male', location: locations[0] });
     onClose();
   };
 
@@ -73,6 +73,7 @@ const AddPetModal = (props: Props) => {
         age: pet.age,
         gender: pet.gender,
         profilePhoto: pet.profilePhoto,
+        location: pet.location || locations[0],
         tags: pet.tags
       }, getAuthHeaders());
       reloadPets();
